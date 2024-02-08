@@ -1,7 +1,9 @@
 package curso.java.hibernate;
 
 import curso.java.hibernate.data.EmployeeRepository;
+import curso.java.hibernate.data.ScopeRepository;
 import curso.java.hibernate.data.entity.Employee;
+import curso.java.hibernate.data.entity.Scope;
 import curso.java.hibernate.data.entity.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,9 @@ public class HibernateExampleApp implements CommandLineRunner {
   private Logger logger = LoggerFactory.getLogger(this.getClass());
 
   @Autowired
-  EmployeeRepository repository;
+  EmployeeRepository repositoryEmp;
+  @Autowired
+  ScopeRepository repositoryScp;
 
   public static void main(String[] args) {
     SpringApplication.run(HibernateExampleApp.class, args);
@@ -31,8 +35,6 @@ public class HibernateExampleApp implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception
   {
-
-
     Employee emp2 = new Employee();
     emp2.setEmail("new Employee email");
     emp2.setFirstName("Bart");
@@ -40,11 +42,23 @@ public class HibernateExampleApp implements CommandLineRunner {
 
     emp2.setTasks(getTasks());
 
-    repository.save(emp2);
-    Optional<Employee> emp = repository.findById(2L);
+    repositoryEmp.save(emp2);
+    Optional<Employee> emp = repositoryEmp.findById(2L);
     emp.ifPresent(employee -> logger.info("Employee id 2 -> {}", emp.get()));
 
-    repository.findAll().forEach(System.out::println);
+    repositoryEmp.findAll().forEach(System.out::println);
+
+    Scope scp3 = new Scope();
+    scp3.setName("Paco");
+    scp3.setDescription("Finanzas");
+
+    scp3.setTasks(getTasks());
+
+    repositoryScp.save(scp3);
+    Optional<Scope> scp = repositoryScp.findById(3L);
+    scp.ifPresent(scope -> logger.info("Scope id 3 -> {}", scp.get()));
+
+    repositoryScp.findAll().forEach(System.out::println);
   }
 
   private Set<Task> getTasks() {
@@ -60,6 +74,4 @@ public class HibernateExampleApp implements CommandLineRunner {
     tasks.add(task2);
     return tasks;
   }
-
-
 }
