@@ -35,30 +35,24 @@ public class HibernateExampleApp implements CommandLineRunner {
   @Override
   public void run(String... args) throws Exception
   {
+    Scope scope = new Scope();
+    scope.setName("Nombre del ámbito");
+    scope.setDescription("Descripción del ámbito");
+
+    Set<Task> tasks = getTasks();
+
     Employee emp2 = new Employee();
     emp2.setEmail("new Employee email");
     emp2.setFirstName("Bart");
     emp2.setLastName("Simpson");
-
-    emp2.setTasks(getTasks());
+    emp2.setTasks(tasks);
 
     repositoryEmp.save(emp2);
+
     Optional<Employee> emp = repositoryEmp.findById(2L);
     emp.ifPresent(employee -> logger.info("Employee id 2 -> {}", emp.get()));
 
     repositoryEmp.findAll().forEach(System.out::println);
-
-    Scope scp3 = new Scope();
-    scp3.setName("Paco");
-    scp3.setDescription("Finanzas");
-
-    scp3.setTasks(getTasks());
-
-    repositoryScp.save(scp3);
-    Optional<Scope> scp = repositoryScp.findById(3L);
-    scp.ifPresent(scope -> logger.info("Scope id 3 -> {}", scp.get()));
-
-    repositoryScp.findAll().forEach(System.out::println);
   }
 
   private Set<Task> getTasks() {

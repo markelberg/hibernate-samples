@@ -10,54 +10,36 @@ public class Task implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     private Integer id;
-    @Column
+
+    @Column(name = "task_name")
     private String taskName;
-    @Column
+
+    @Column(name = "task_description")
     private String taskDescription;
-    @Column
+
+    @Column(name = "employee_id")
     private Integer employeeId;
-    @Column
-    private Integer scopeId;
 
-    public Integer getEmployeeId() {
-        return employeeId;
-    }
-    public void setEmployeeId(Integer employeeId) {
-        this.employeeId = employeeId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "scope_id", referencedColumnName = "id")
+    private Scope scope;
 
-    public Integer getScopeId() {
-        return scopeId;
-    }
-    public void setScopeId(Integer scopeId) {
-        this.scopeId = scopeId;
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public Integer getId() {
-        return id;
-    }
+    public String getTaskName() { return taskName; }
+    public void setTaskName(String taskName) { this.taskName = taskName; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public String getTaskDescription() { return taskDescription; }
+    public void setTaskDescription(String taskDescription) { this.taskDescription = taskDescription; }
 
-    public String getTaskName() {
-        return taskName;
-    }
+    public Integer getEmployeeId() { return employeeId; }
+    public void setEmployeeId(Integer employeeId) { this.employeeId = employeeId; }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
-
-    public String getTaskDescription() {
-        return taskDescription;
-    }
-
-    public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
-    }
+    public Scope getScope() { return scope; }
+    public void setScope(Scope scope) { this.scope = scope; }
 
     @Override
     public String toString() {
