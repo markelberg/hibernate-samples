@@ -29,7 +29,7 @@ public class Employee implements Serializable {
   private String lastName;
 
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-  @JoinColumn(name = "employeeId")
+  @JoinColumn(name = "employee_id")
   private Set<Task> tasks = new HashSet<>();
 
   public Integer getId() {
